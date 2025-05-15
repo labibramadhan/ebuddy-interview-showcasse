@@ -6,10 +6,14 @@ export class SecurityResultDTO {
   };
 
   constructor(user: {
-    uid: string;
+    userId: string;
     email: string;
     permissions: string[];
   }) {
-    this.user = user;
+    this.user = {
+      userId: user.userId,
+      email: user.email,
+      permissions: user.permissions
+    };
   }
 }

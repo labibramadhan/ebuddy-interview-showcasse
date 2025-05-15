@@ -10,11 +10,9 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "strict": true,
-    "outDir": ".",
-    "paths": {
-      "@ebuddy/types/*": ["../types/*"]
-    }
+    "outDir": "./dist",
+    "rootDir": "."
   },
   "include": ["**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "dist"]
 }
