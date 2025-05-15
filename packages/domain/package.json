@@ -1,0 +1,22 @@
+{
+  "name": "@ebuddy/domain",
+  "version": "0.0.1",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf .turbo node_modules dist"
+  },
+  "dependencies": {
+    "firebase": "^10.9.0",
+    "firebase-admin": "^11.11.1",
+    "reflect-metadata": "^0.2.2",
+    "tsyringe": "^4.10.0"
+  },
+  "devDependencies": {
+    "@ebuddy/backend": "workspace:*",
+    "@ebuddy/types": "workspace:*",
+    "@types/express": "^5.0.1",
+    "typescript": "^5.0.0"
+  }
+}

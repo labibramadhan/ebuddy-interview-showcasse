@@ -1,0 +1,30 @@
+{
+  "entryFile": "src/index.ts",
+  "noImplicitAdditionalProperties": "throw-on-extras",
+  "controllerPathGlobs": ["src/**/*.controller.ts"],
+  "spec": {
+    "outputDirectory": "src/swagger",
+    "specVersion": 3,
+    "securityDefinitions": {
+      "jwt": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "routes": {
+    "authenticationModule": "src/middleware/tsoa-security.middleware.ts",
+    "routesDir": "src/routes",
+    "iocModule": "src/core/tsoa-ioc.ts"
+  },
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@ebuddy/types/*": ["../../packages/types/*"],
+      "@ebuddy/domain/*": ["../../packages/domain/*"],
+      "@ebuddy/backend/*": ["../../packages/backend/*"]
+    }
+  }
+}

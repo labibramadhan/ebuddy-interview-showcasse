@@ -1,0 +1,48 @@
+{
+  "name": "@ebuddy-app/backend",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist/index.js",
+  "scripts": {
+    "tsoa": "tsoa",
+    "dev": "nodemon --watch 'src/**/*.ts' --ignore 'src/routes/routes.ts' --ignore 'src/swagger/swagger.json' --watch '../../../packages/**/*.ts' --exec 'tsoa spec-and-routes && node -r @swc-node/register' src/index.ts",
+    "prebuild": "pnpm run clean && pnpm tsoa spec-and-routes",
+    "build": "tsc",
+    "prestart": "pnpm tsoa spec-and-routes",
+    "start": "node -r @swc-node/register src/index.ts",
+    "lint": "eslint --ext .ts src/",
+    "test": "jest",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@tsoa/runtime": "^6.6.0",
+    "@types/swagger-ui-express": "^4.1.8",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "firebase": "^10.9.0",
+    "firebase-admin": "^13.4.0",
+    "pino": "^9.6.0",
+    "reflect-metadata": "^0.2.2",
+    "swagger-ui-express": "^5.0.1",
+    "tsoa": "^6.6.0",
+    "tsyringe": "^4.10.0",
+    "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "@ebuddy/domain": "workspace:*",
+    "@ebuddy/types": "workspace:*",
+    "@swc-node/register": "^1.10.10",
+    "@types/cors": "^2.8.18",
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.15.17",
+    "nodemon": "^3.0.1",
+    "tsconfig-paths": "^4.2.0"
+  }
+}

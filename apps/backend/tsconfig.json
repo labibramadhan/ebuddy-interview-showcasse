@@ -1,0 +1,33 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "module": "commonjs",
+    "target": "es2017",
+    "esModuleInterop": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "declaration": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@ebuddy/types/*": ["../../packages/types/*"],
+      "@ebuddy/domain/*": ["../../packages/domain/*"],
+      "@ebuddy/backend/*": ["../../packages/backend/*"]
+    },
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  },
+  "include": [
+    "src/typings.d.ts",
+    "src/*.d.ts",
+    "src/**/*.d.ts",
+    "src/**/*",
+    "src/index.ts"
+  ],
+  "exclude": ["node_modules", "dist"]
+}
