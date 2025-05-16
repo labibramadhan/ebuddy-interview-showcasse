@@ -2,6 +2,57 @@
 
 This project is a full-stack application built with a modern tech stack using Turborepo as the monorepo management tool. It demonstrates a clean architecture approach with separation of concerns and follows SOLID principles.
 
+- [eBuddy Interview Challenge](#ebuddy-interview-challenge)
+  - [FAQ ❓](#faq-)
+    - [❓ What UI kit is being used?](#-what-ui-kit-is-being-used)
+    - [❓ How is API call abstraction managed in the frontend?](#-how-is-api-call-abstraction-managed-in-the-frontend)
+    - [❓ How is the state management of API state handled?](#-how-is-the-state-management-of-api-state-handled)
+    - [❓ How does the backend manage controllers, routes, and authentication validation?](#-how-does-the-backend-manage-controllers-routes-and-authentication-validation)
+    - [❓ Is the backend using clean architecture?](#-is-the-backend-using-clean-architecture)
+    - [❓ How easy would it be to replace Firebase with another database or authentication solution?](#-how-easy-would-it-be-to-replace-firebase-with-another-database-or-authentication-solution)
+  - [Tech Stack](#tech-stack)
+    - [Monorepo Structure](#monorepo-structure)
+    - [Backend](#backend)
+    - [Frontend](#frontend)
+    - [Shared](#shared)
+  - [Directory Structure](#directory-structure)
+  - [Code Quality](#code-quality)
+    - [Husky and Git Hooks](#husky-and-git-hooks)
+    - [Linting and Formatting](#linting-and-formatting)
+  - [Testing](#testing)
+    - [Frontend Testing with Cypress](#frontend-testing-with-cypress)
+      - [Component Testing](#component-testing)
+  - [Implementation Examples](#implementation-examples)
+    - [Turborepo](#turborepo)
+    - [Firebase](#firebase)
+    - [Next.js \& React](#nextjs--react)
+    - [Redux Toolkit Query](#redux-toolkit-query)
+    - [Express.js with TSOA](#expressjs-with-tsoa)
+    - [TSyringe](#tsyringe)
+  - [Code Structure Examples](#code-structure-examples)
+    - [Frontend Atomic Design Pattern](#frontend-atomic-design-pattern)
+      - [1. Atoms (Basic Building Blocks)](#1-atoms-basic-building-blocks)
+      - [2. Molecules (Groups of Atoms)](#2-molecules-groups-of-atoms)
+      - [3. Organisms (Groups of Molecules)](#3-organisms-groups-of-molecules)
+      - [4. Templates (Page Layouts)](#4-templates-page-layouts)
+      - [5. Page (Next.js App Router)](#5-page-nextjs-app-router)
+    - [Backend Structure with Dependency Injection](#backend-structure-with-dependency-injection)
+      - [1. Entity Definition (Shared Types)](#1-entity-definition-shared-types)
+      - [2. Repository Interface (Domain Layer)](#2-repository-interface-domain-layer)
+      - [3. Repository Implementation (Domain Layer)](#3-repository-implementation-domain-layer)
+      - [4. Use Case (Domain Layer)](#4-use-case-domain-layer)
+      - [5. Controller (Backend App)](#5-controller-backend-app)
+      - [6. Dependency Registration (Backend App)](#6-dependency-registration-backend-app)
+  - [Configuration](#configuration)
+    - [Environment Variables](#environment-variables)
+      - [Backend (.env in apps/backend)](#backend-env-in-appsbackend)
+      - [Frontend (.env in apps/frontend)](#frontend-env-in-appsfrontend)
+  - [Development](#development)
+    - [Prerequisites](#prerequisites)
+    - [Starting Development Servers](#starting-development-servers)
+    - [Building the Project](#building-the-project)
+  - [License](#license)
+
 ## FAQ ❓
 
 ### ❓ What UI kit is being used?
@@ -184,6 +235,84 @@ This approach follows the Dependency Inversion Principle from SOLID, ensuring th
 │   └── types/              # Shared TypeScript types
 │       └── entities/       # Entity definitions
 └── turbo.json              # Turborepo configuration
+```
+
+## Code Quality
+
+### Husky and Git Hooks
+
+This project uses Husky to manage Git hooks, ensuring code quality checks are run before commits and pushes. The following hooks are configured:
+
+- **pre-commit**: Runs linting and formatting checks on staged files
+- **pre-push**: Runs tests to ensure all tests pass before pushing to the repository
+
+This helps maintain consistent code quality and prevents problematic code from being committed or pushed to the repository.
+
+### Linting and Formatting
+
+The project uses:
+
+- **ESLint**: For static code analysis
+- **Prettier**: For code formatting
+- **TypeScript**: For type checking
+
+These tools are configured project-wide and can be run with the following commands:
+
+```
+pnpm lint        # Run ESLint
+pnpm format      # Run Prettier
+pnpm type-check  # Run TypeScript type checking
+```
+
+## Testing
+
+### Frontend Testing with Cypress
+
+The frontend uses Cypress for component testing. Cypress provides a powerful framework for testing React components in isolation or with their required context providers.
+
+#### Component Testing
+
+Components are tested using Cypress Component Testing, which allows testing React components in a real browser environment. The tests are located alongside the components with a `.cy.tsx` extension.
+
+The testing setup includes:
+
+- **Custom mount commands**: Including `cy.mount()` for basic component mounting and `cy.mountWithLayout()` for mounting components with all the application's providers (Redux, Theme, Auth)
+- **Stub utilities**: For mocking callbacks and testing component interactions
+- **Atomic design testing**: Tests are organized following the atomic design pattern (atoms, molecules, organisms, templates)
+
+To run component tests:
+
+```
+# Run tests in headless mode
+pnpm --filter frontend test
+
+# Open Cypress Test Runner for interactive testing
+pnpm --filter frontend cypress open --component
+```
+
+Example of a component test:
+
+```tsx
+describe("<LoginFormMolecule />", () => {
+  it("renders with default props", () => {
+    const props = {
+      email: "",
+      password: "",
+      loading: false,
+      error: null,
+      onEmailChange: cy.stub().as("onEmailChange"),
+      onPasswordChange: cy.stub().as("onPasswordChange"),
+      onSubmit: cy.stub().as("onSubmit"),
+    };
+
+    cy.mount(<LoginFormMolecule {...props} />);
+
+    // Check that form elements exist
+    cy.get("input#email").should("exist");
+    cy.get("input#password").should("exist");
+    cy.get("button[type='submit']").should("exist").and("contain", "Sign In");
+  });
+});
 ```
 
 ## Implementation Examples
